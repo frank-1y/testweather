@@ -3,7 +3,7 @@ const request = require('request')
 const bodyParser = require('body-parser')
 const app = express()
 const fs = require('fs')
-
+console.log('test')
 require('dotenv').config()
 
 const api_key = process.env.API_KEY 
