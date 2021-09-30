@@ -6,7 +6,8 @@ const fs = require('fs')
 
 require('dotenv').config()
 
-const api_key = process.env.API_KEY
+const api_key = process.env.API_KEY || '48b551f3219542775f26e2a9cf42b297'
+const PORT = process.env.PORT || 1331
 var places
 fs.readFile('places.json',(err,data)=>{
     places = JSON.parse(data)
@@ -75,6 +76,6 @@ async function get_city_weather(city){
 
 
 
-app.listen(process.env.PORT,()=>{
-    console.log('now listening on',process.env.PORT)
+app.listen(PORT,()=>{
+    console.log('now listening on',PORT)
 })
