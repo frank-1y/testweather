@@ -1,0 +1,68 @@
+#main{
+    width:100vw;
+    height:100vh;
+    display:flex
+}
+
+.one-third {
+    flex:1;
+}
+
+.two-thirds {
+    flex:2; 
+}
+
+#citylist{
+    overflow-y:scroll;
+    max-height:500px;
+    width:250px;
+}
+
+#citylist p {
+    border-bottom: black thin solid;
+    text-align: center;
+}
+
+#citylist a {
+    font-weight:bolder;
+    color:rgb(46, 46, 46);
+    text-decoration: none;
+}
+
+#ausmap{
+    max-height:80vh;
+    display:block;
+    margin:auto;
+}
+
+#overlay
+{
+    width:100%;
+    height:0;
+    background:black;
+    background:rgba(0,0,0,0.9);
+    z-index:999;
+    top:0;
+    left:0;
+    position:fixed;
+    transition:0.5s;
+    overflow-x:hidden;
+}
+
+#overlay_content{
+    position:relative;
+    top:25%;
+    text-align:center;
+    color:rgb(250,250,250);
+}
+
+
+
+#closebtn {
+    color:white;
+    text-decoration: none;
+    font-size:60px;
+    position:absolute;
+    top:20px;
+    right:45px;
+}
