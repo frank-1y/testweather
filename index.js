@@ -6,7 +6,7 @@ const fs = require('fs')
 
 require('dotenv').config()
 
-const api_key = process.env.API_KEY || '48b551f3219542775f26e2a9cf42b297'
+const api_key = process.env.API_KEY 
 const PORT = process.env.PORT || 1331
 var places
 fs.readFile('places.json',(err,data)=>{
