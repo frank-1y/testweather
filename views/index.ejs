@@ -1,3 +1,4 @@
+<html>
     <head>
         <link rel='stylesheet' href='style.css'>
         <title>Weather Demo</title>
@@ -6,7 +7,7 @@
         <h1 style='text-align:center;'>Australia Weather</h1>
         <div id='main'>
             <div class='two-thirds'>
-                <img src='ausmap.jpg' id='ausmap' draggable="false">
+                <img src='ausmap2.jpg' id='ausmap' draggable="false">
             </div>
             <div class='one-third'>
                 <div id='citylist'>
@@ -57,7 +58,7 @@
             let y = e.pageY
             let xratio = (x-mapx)/mapwidth
             let yratio = (y-mapy)/mapheight
-            console.log(xratio,yratio   )
+            console.log(xratio,yratio)
             
             let name =''
             for (let i=0;i<places.length;i++){
@@ -144,150 +145,5 @@
             }
         }
     </script>
-<html>
-        <link rel='stylesheet' href='style.css'>
-        <title>Weather Demo</title>
-    </head>
-    <body onload='setup()'>
-        <h1 style='text-align:center;'>Australia Weather</h1>
-        <div id='main'>
-            <div class='two-thirds'>
-                <img src='ausmap.jpg' id='ausmap' draggable="false">
-            </div>
-            <div class='one-third'>
-                <div id='citylist'>
 
-                </div>
-            </div>
-        </div>
-
-        <span id='overlay'>
-            <!-- <button id='closebtn'>&times;</button> -->
-            <a href='javascript:void(0)' id='closebtn'>&times;</a>
-                <div id='overlay_content'></div>
-        </span>
-    </body>
-    <script>
-        const map_threshold=0.01
-        var overlay_on = false
-        var places = '<%=places%>'
-        places = places.replaceAll('&#34;',`"`)
-        places = JSON.parse(places)
-        places.forEach((e)=>{
-            var ele = document.createElement('div')
-            var p = document.createElement('p')
-            p.className='cityitem'
-            p.onclick = (e)=>{
-                get_weather(e.target.innerText)
-            }
-            p.innerHTML='<a href="javascript:void(0)">'+e.name+'</a>'
-            ele.appendChild(p)
-            citylist.appendChild(ele)
-        })
-
-
-        var rect
-        var mapx
-        var mapy
-        var mapwidth
-        var mapheight
-        function setup(){
-            
-             mapx = ausmap.x
-             mapy = ausmap.y
-             mapwidth = ausmap.width
-             mapheight = ausmap.height
-        }
-        ausmap.onclick = (e) =>{
-            let x = e.pageX
-            let y = e.pageY
-            let xratio = (x-mapx)/mapwidth
-            let yratio = (y-mapy)/mapheight
-            console.log(xratio,yratio   )
-            
-            let name =''
-            for (let i=0;i<places.length;i++){
-                let dist = Math.sqrt((places[i].x-xratio)**2+(places[i].y-yratio)**2)
-                if (dist<map_threshold){
-                    name=places[i].name
-                    get_weather(name)
-                    break
-                }
-            }
-        }
-            
-        function get_weather(name){
-            if (name!=''){
-                var xmlhttp = new XMLHttpRequest()
-                
-                clearOverlay()
-                var p = document.createElement('h2')
-                p.innerText = "loading"
-                overlay_content.appendChild(p)
-                xmlhttp.open('GET',`/city/?name=${name}`,true)
-                xmlhttp.send()
-                close(true)
-                xmlhttp.onload = ()=>{
-                    if (xmlhttp.response!="not found"){
-                        console.log(JSON.parse(xmlhttp.response))
-                        display_weather(JSON.parse(xmlhttp.response))
-                    }else{
-                        clearOverlay()
-                        close(false)
-                        alert('city not found')
-                    }
-                        
-                 }
-               }
-            }
-
-            function display_weather(weather){
-                clearOverlay()
-                var header = document.createElement('h2')
-                header.innerText = weather.name
-                overlay_content.appendChild(header)
-                var p1 = document.createElement('p')
-                var temp = {max:Math.round(weather.main.temp_max),min:Math.round(weather.main.temp_max)}
-                p1.innerText = `${weather.weather[0].description} with a max of ${temp.max} and a minimum of ${temp.min}`
-                overlay_content.appendChild(p1)
-                var p2 = document.createElement('p')
-                
-            }
-
-            function clearOverlay(){
-                if (overlay_content.childNodes.length>0){
-                    while (overlay_content.childNodes.length>0){
-                        overlay_content.removeChild(overlay_content.childNodes[0])
-                    }
-                }
-            }
-
-        
-
-
-        document.addEventListener('keydown',(e)=>{
-            if (e.key=='Escape'){
-                close()
-            }
-        })
-
-        closebtn.onclick = function(){close(false)}
-
-        function close(state){
-            if (state==undefined)
-            {
-                state = !overlay_on
-            }
-            if (overlay_on&&!state){
-                overlay.style.height='0%'
-                overlay_on=false
-            }else if (!overlay_on&&state){
-                overlay.style.height='100%'
-                overlay_on=true
-            }else{
-                overlay.style.height='0%'
-                overlay_on=false
-            }
-        }
-    </script>
 </html>
